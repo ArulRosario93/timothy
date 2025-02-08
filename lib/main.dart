@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:timothy/pages/SignUp/sign_up_page.dart';
+import 'package:timothy/pages/Timothy/timothy.dart';
 
 void main() {
   runApp(const Timothy());
@@ -12,7 +12,7 @@ class Timothy extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: SignUp(),
+      home: TimothyApp(),
     );
   }
 }
