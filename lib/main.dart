@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:timothy/pages/OtherUser/ChatPage/chat_page.dart';
 import 'package:timothy/pages/OtherUser/UserProfile/user_profile.dart';
-import 'package:timothy/pages/Timothy/Profile/profile_page.dart';
 import 'package:timothy/pages/Timothy/timothy.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -26,7 +26,7 @@ class Timothy extends StatelessWidget {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: UserProfile(),
+      home: ChatPage(),
     );
   }
 }

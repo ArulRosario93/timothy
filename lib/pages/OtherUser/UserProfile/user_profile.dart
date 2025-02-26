@@ -25,71 +25,88 @@ class UserProfile extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Container(
-                        alignment: Alignment.bottomCenter,
-                          decoration: BoxDecoration(
-                          // color: Colors.black26,
-                            boxShadow: [
-                              // BoxShadow(
-                              //   color: Colors.black26,
-                              //   blurRadius: 10,
-                              //   offset: const Offset(0, 5),
-                              //   blurStyle: BlurStyle.outer
-                              // ),
-                            ]
-                          ),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Expanded(
-                                child: Container(
-                                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                                  decoration: BoxDecoration(
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.black54,
-                                        blurRadius: 50,
-                                        offset: const Offset(0, 20),
-                                        blurStyle: BlurStyle.normal
-                                      ),
-                                      BoxShadow(
-                                        color: Colors.black45,
-                                        blurRadius: 200,
-                                        offset: const Offset(0, -50),
-                                        blurStyle: BlurStyle.normal
-                                      ),
-                                    ]
-                                  ),
+
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Container(
+                            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                            decoration: BoxDecoration(
+                              boxShadow: [
+                                // This was tough. But I did it good.
+                                BoxShadow(
+                                  color: const Color.fromARGB(209, 0, 0, 0),
+                                  blurRadius: 40,
+                                  spreadRadius: 20,
+                                  offset: const Offset(0, 50),
+                                  blurStyle: BlurStyle.normal
+                                ),
+                                BoxShadow(
+                                  color: const Color.fromARGB(159, 0, 0, 0),
+                                  blurRadius: 80,
+                                  spreadRadius: 40,
+                                  offset: const Offset(0, 0),
+                                  blurStyle: BlurStyle.normal
+                                ),
+                                BoxShadow(
+                                  color: Colors.black45,
+                                  blurRadius: 120,
+                                  spreadRadius: 60,
+                                  offset: const Offset(0, -50),
+                                  blurStyle: BlurStyle.normal
+                                ),
+                              ]
+                            ),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Expanded(
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.end,
-                                    mainAxisSize: MainAxisSize.min,
+                                    // mainAxisSize: MainAxisSize.min,
                                       children: [
-                                          Text("Arul Rosario", style: GoogleFonts.poppins(fontSize: 40, fontWeight: FontWeight.bold, color: Colors.white),),
-                                          Text("Founder of the maja company", style: GoogleFonts.poppins(color: Colors.white, fontSize: 12),),
+                                        Text("Arul Rosario", style: GoogleFonts.poppins(fontSize: 40, fontWeight: FontWeight.bold, color: Colors.white),),
+                                        // Text("Arul Rosario mafaef", style: GoogleFonts.poppins(fontSize: 40, fontWeight: FontWeight.bold, color: Colors.white), softWrap: true,),
+                                        Text("Founder of the maja company", style: GoogleFonts.poppins(color: Colors.white, fontSize: 12),),
                                       ],
                                   ),
                                 ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(50),
-                                  color: Colors.white,
+                                Row(
+                                  children: [
+                                    Icon(Icons.location_on, color: const Color.fromARGB(234, 255, 255, 255), size: 14,),
+                                    SizedBox(width: 5,),
+                                    Text("Chennai", style: GoogleFonts.poppins(color: const Color.fromARGB(234, 255, 255, 255), fontSize: 12),),
+                                  ],
                                 ),
-                                child: Text("Chat", style: GoogleFonts.poppins(color: Colors.black, fontSize: 14, fontWeight: FontWeight.w600),),
-                              )
-                            ],
+                              ],
+                            ),
                           ),
-                        )
+                        ],
+                      ),
+                      SafeArea(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                          child: Icon(Icons.arrow_back, color: Colors.white, size: 25,),
+                        ),
+                      ),
                     ],
                   ),
                 ),
                 Flexible(
                   flex: 2,
                   child: Container(
-                    color: const Color.fromARGB(244, 0, 0, 0),
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: Colors.black,
+                    ),
+                    child: Container(
+                      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Text('Share your Testimony', style: GoogleFonts.poppins(fontSize: 12, fontWeight: FontWeight.w500),)),
                   ),
                 )
               ],
