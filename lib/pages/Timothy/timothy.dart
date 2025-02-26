@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:timothy/pages/Timothy/Connect/connect_page.dart';
 import 'package:timothy/pages/Timothy/Home/home_page.dart';
 import 'package:timothy/pages/Timothy/Profile/profile_page.dart';
+import 'package:timothy/widgets/BottomNavBtn/bottom_nav_btn.dart';
 
 class TimothyApp extends StatefulWidget {
   const TimothyApp({super.key});
@@ -31,27 +32,42 @@ class _TimothyAppState extends State<TimothyApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 249, 249, 249),
-      appBar: AppBar(
+      backgroundColor: const Color.fromARGB(255, 244, 244, 244),
+      appBar: selectedpage == 0? AppBar(
         backgroundColor: Colors.transparent,
         title: Text("Heyy, Arul"),
-      ),
-      bottomNavigationBar: SizedBox(
+      ): null,
+      bottomNavigationBar: Container(
+        alignment: Alignment.center,
         height: 50,
-        child: Container(
-          alignment: Alignment.center,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              
-              IconButton(onPressed: () => handlePageChange(0), icon: Icon(Icons.home_outlined)),
-              
-              IconButton(onPressed: () => handlePageChange(1), icon: Icon(Icons.message_outlined)),
-              
-              IconButton(onPressed: () => handlePageChange(2), icon: Icon(Icons.person_outlined)),
-              
-            ],
-          ),
+        margin: EdgeInsets.all(10.0),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(50),
+        ),
+        child: Row(
+          children: [
+            
+            Flexible(flex: 1, child: GestureDetector(
+              onTap: () => handlePageChange(0),
+              child: BottomNavBtn(selectedpage: 0, selectedPageIndex: selectedpage, icon: Icon(Icons.home_outlined, color: selectedpage == 0? Colors.white: Colors.black,),)
+            )),
+            
+            Flexible(flex: 1, child: 
+              GestureDetector(
+                onTap: () => handlePageChange(1),
+                child: BottomNavBtn(selectedpage: 1, selectedPageIndex: selectedpage, icon: Icon(Icons.message_outlined, color: selectedpage == 1? Colors.white: Colors.black,),),
+              )
+            ),
+            
+            Flexible(flex: 1, child: 
+              GestureDetector(
+                onTap: () => handlePageChange(2),
+                child: BottomNavBtn(selectedpage: 2, selectedPageIndex: selectedpage, icon: Icon(Icons.person_outline, color: selectedpage == 2? Colors.white: Colors.black,),),
+              )
+            ),
+            
+          ],
         ),
       ),
 

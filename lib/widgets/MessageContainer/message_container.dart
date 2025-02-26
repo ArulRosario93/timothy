@@ -7,7 +7,7 @@ class MessageContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(12),
+      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
         color: Colors.white,   
         borderRadius: BorderRadius.circular(12)     
@@ -29,8 +29,8 @@ class MessageContainer extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("ARUL ROSARIO", style: GoogleFonts.poppins(fontWeight: FontWeight.w600 ,fontSize: 16 ),),
-                Text("HIIII...", style: GoogleFonts.poppins(fontSize: 14, color: Colors.grey),)
+                Text("ARUL ROSARIO", style: GoogleFonts.poppins(fontWeight: FontWeight.w600 ,fontSize: 14 ),),
+                Text("HIIII...", style: GoogleFonts.poppins(fontSize: 12, color: Colors.grey),)
               ],
             ),
           ),
