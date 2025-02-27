@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:timothy/widgets/ShowModalBottomSheet/show_modal_bottom_sheet.dart';
 
 class ChatPage extends StatelessWidget {
   const ChatPage({super.key});
@@ -66,6 +67,55 @@ class ChatPage extends StatelessWidget {
       },
     ];
 
+    void handleClick() {
+      // Handle click event
+      bottomSheetForMessage(context, {
+        "title": "Verses",
+        "data": [
+          {
+            "verse": "Blessed are the poor in spirit, for theirs is the kingdom of heaven",
+            "reference": "- Matthew 5:3"
+          },
+          {
+            "verse": "Blessed are those who mourn, for they will be comforted",
+            "reference": "- Matthew 5:4"
+          },
+          {
+            "verse": "Blessed are the meek, for they will inherit the earth",
+            "reference": "- Matthew 5:5"
+          },
+          {
+            "verse": "Blessed are those who hunger and thirst for righteousness, for they will be filled",
+            "reference": "- Matthew 5:6"
+          },
+          {
+            "verse": "Blessed are the merciful, for they will be shown mercy",
+            "reference": "- Matthew 5:7"
+          },
+          {
+            "verse": "Blessed are the pure in heart, for they will see God",
+            "reference": "- Matthew 5:8"
+          },
+          {
+            "verse": "Blessed are the peacemakers, for they will be called children of God",
+            "reference": "- Matthew 5:9"
+          },
+          {
+            "verse": "Blessed are those who are persecuted because of righteousness, for theirs is the kingdom of heaven",
+            "reference": "- Matthew 5:10"
+          },
+          {
+            "verse": "Blessed are you when people insult you, persecute you and falsely say all kinds of evil against you because of me",
+            "reference": "- Matthew 5:11"
+          },
+          {
+            "verse": "Rejoice and be glad, because great is your reward in heaven, for in the same way they persecuted the prophets who were before you",
+            "reference": "- Matthew 5:12"
+          }
+        ]
+      }); 
+    }
+
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
@@ -111,7 +161,7 @@ class ChatPage extends StatelessWidget {
           
               contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
               suffixIcon: IconButton(
-                onPressed: () {},
+                onPressed: handleClick,
                 icon: const Icon(Icons.send_rounded, size: 18, color: Colors.white,),
               ),
             ),
