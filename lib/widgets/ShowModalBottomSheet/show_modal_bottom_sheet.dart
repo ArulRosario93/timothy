@@ -1,7 +1,15 @@
 import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
+import "package:timothy/widgets/Slidable/slidable.dart";
 
 Future<void> bottomSheetForMessage(BuildContext context, Map data){
+
+  bool seleted = false;
+
+  handleChange() {
+    seleted = !seleted;
+  }
+
   return showModalBottomSheet(
     context: context,
     isScrollControlled: true,
@@ -21,7 +29,6 @@ Future<void> bottomSheetForMessage(BuildContext context, Map data){
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
-            
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Center(
@@ -46,44 +53,12 @@ Future<void> bottomSheetForMessage(BuildContext context, Map data){
               ),
               SizedBox(height: 10), // Add spacing for better UI
               Expanded(
-                child: ListView.builder(
-                  itemCount: data["data"].length,
-                  physics: BouncingScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 12.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            data["data"][index]["verse"],
-                            textAlign: TextAlign.left,
-                            style: GoogleFonts.poppins(
-                              fontSize: 14,
-                              color: Colors.white,
-                            ),
-                          ),
-                          Container(
-                            alignment: Alignment.centerRight,
-                            child: Text(
-                              data["data"][index]["reference"],
-                              textAlign: TextAlign.right,
-                              style: GoogleFonts.poppins(
-                                fontSize: 12,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                ),
+                child: SlidableWidget(data: data, seleted: seleted)
               ),
             ],
           ),
         ),
       );
-}
+    }
   );
 }
