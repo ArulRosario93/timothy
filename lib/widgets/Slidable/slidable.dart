@@ -5,7 +5,8 @@ import 'package:timothy/widgets/ShowModalBottomSheet/slidable_widget.dart';
 class SlidableWidget extends StatefulWidget {
   final Map data;
   final bool seleted; // Track whether the item is selected
-  const SlidableWidget({super.key, required this.data, required this.seleted});
+  final Function(List msgs) handleAddMsg; // Callback to handle message submission
+  const SlidableWidget({super.key, required this.data, required this.seleted, required this.handleAddMsg});
 
   @override
   State<SlidableWidget> createState() => _SlidableWidgetState();
@@ -30,6 +31,10 @@ class _SlidableWidgetState extends State<SlidableWidget> {
     });
   }
 
+  void handleSubmitMsg(List msgs) {
+    widget.handleAddMsg(msgs);
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -41,6 +46,7 @@ class _SlidableWidgetState extends State<SlidableWidget> {
           index: index,
           handleClick: handleClick,
           isSelected: selectedIndex == index,
+          handleSubmitMsg: handleSubmitMsg
         );
       },
     );

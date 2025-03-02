@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:timothy/pages/OtherUser/UserProfile/user_profile.dart';
 
 class Individual extends StatefulWidget {
   const Individual({super.key});
@@ -15,9 +16,15 @@ class _IndividualState extends State<Individual> {
   void startAnimation() async {
     await Future.delayed(Duration(milliseconds: 500), () => {
       setState(() {
-        _height = MediaQuery.of(context).size.height * .5;
+        _height = MediaQuery.of(context).size.height * .6;
       })
     });
+  }
+
+  void navigateToProfile() {
+    Navigator.push(context, MaterialPageRoute(
+      builder: (context) => UserProfile(),
+    ));
   }
 
   @override
@@ -32,25 +39,31 @@ class _IndividualState extends State<Individual> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {    
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Container(
-          height: MediaQuery.of(context).size.height * .5,
-          alignment: Alignment.bottomCenter,
-          child: AnimatedContainer(
-            duration: Duration(milliseconds: 600),
-            height: _height,
-            curve: Curves.easeIn,
-            alignment: Alignment.bottomCenter,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                image: DecorationImage(
-                  fit: BoxFit.fitHeight,
-                  image: NetworkImage("https://c02.purpledshub.com/uploads/sites/48/2023/07/GettyImages-1388003181-917636f.jpg?w=1029&webp=1"))
+        GestureDetector(
+          onTap: navigateToProfile,
+          child: Hero(
+              tag: "profile-image",
+              transitionOnUserGestures: true,
+              child: Container(
+                height: MediaQuery.of(context).size.height * .6,
+                alignment: Alignment.bottomCenter,
+                child: AnimatedContainer(
+                  duration: Duration(milliseconds: 600),
+                  height: _height,
+                  curve: Curves.easeIn,
+                  alignment: Alignment.bottomCenter,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      image: DecorationImage(
+                        fit: BoxFit.fitHeight,
+                        image: NetworkImage("https://plus.unsplash.com/premium_photo-1689568126014-06fea9d5d341?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D"))
+                    ),
               ),
-            child: Text("Holaa"), 
+            ),
           ),
         ),
       ],

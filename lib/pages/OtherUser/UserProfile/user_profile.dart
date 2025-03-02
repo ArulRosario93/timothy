@@ -7,6 +7,19 @@ class UserProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        
+      ),
       body: Column(
         children: [
           Expanded(
@@ -16,12 +29,16 @@ class UserProfile extends StatelessWidget {
                   flex: 4,
                   child: Stack(
                     children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          image: DecorationImage(
-                            image: NetworkImage("https://plus.unsplash.com/premium_photo-1689568126014-06fea9d5d341?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D"),
-                            fit: BoxFit.cover,
+                      Hero(
+                        tag: "profile-image",
+                        transitionOnUserGestures: true,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            image: DecorationImage(
+                              image: NetworkImage("https://plus.unsplash.com/premium_photo-1689568126014-06fea9d5d341?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D"),
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
                       ),
@@ -83,12 +100,6 @@ class UserProfile extends StatelessWidget {
                             ),
                           ),
                         ],
-                      ),
-                      SafeArea(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                          child: Icon(Icons.arrow_back, color: Colors.white, size: 25,),
-                        ),
                       ),
                     ],
                   ),

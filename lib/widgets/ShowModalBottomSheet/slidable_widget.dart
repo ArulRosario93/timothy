@@ -6,6 +6,7 @@ class SlidableComponent extends StatefulWidget {
   final Map data;
   final int index;
   final Function(int, SlidableController) handleClick;
+  final Function(List msgs) handleSubmitMsg;
   final bool isSelected;
 
   const SlidableComponent({
@@ -14,6 +15,7 @@ class SlidableComponent extends StatefulWidget {
     required this.index,
     required this.handleClick,
     required this.isSelected,
+    required this.handleSubmitMsg,
   });
 
   @override
@@ -39,6 +41,26 @@ class _SlidableComponentState extends State<SlidableComponent> with TickerProvid
     }
   }
 
+  void handleClick() {
+    widget.handleSubmitMsg([
+      widget.data["data"][widget.index]["verse"],
+      widget.data["data"][widget.index]["reference"],
+    ]);
+
+    _controller.close(); // Close the slidable
+    Navigator.pop(context); // Close the bottom sheet after sending
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _controller.dispose(); // Dispose of the controller
+    // This is important to prevent memory leaks
+    // and ensure that the controller is properly cleaned up.
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Slidable(
@@ -49,9 +71,7 @@ class _SlidableComponentState extends State<SlidableComponent> with TickerProvid
         motion: const ScrollMotion(),
         children: [
           SlidableAction(
-            onPressed: (context) {
-              // Handle delete action
-            },
+            onPressed: (context) => handleClick(),
             backgroundColor: Colors.white,
             foregroundColor: Colors.black,
             borderRadius: BorderRadius.circular(10),
@@ -64,7 +84,7 @@ class _SlidableComponentState extends State<SlidableComponent> with TickerProvid
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 10),
           decoration: BoxDecoration(
-            color: widget.isSelected ? Colors.blueGrey[800] : Colors.transparent, // Highlight selected item
+            color: widget.isSelected ? const Color.fromARGB(108, 55, 71, 79) : Colors.transparent, // Highlight selected item
             borderRadius: BorderRadius.circular(8),
           ),
           child: Column(

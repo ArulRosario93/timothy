@@ -2,7 +2,7 @@ import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
 import "package:timothy/widgets/Slidable/slidable.dart";
 
-Future<void> bottomSheetForMessage(BuildContext context, Map data){
+Future<void> bottomSheetForMessage({required BuildContext context, required Map data, required Function(List msgs) handleAddMsg}){
 
   bool seleted = false;
 
@@ -53,7 +53,7 @@ Future<void> bottomSheetForMessage(BuildContext context, Map data){
               ),
               SizedBox(height: 10), // Add spacing for better UI
               Expanded(
-                child: SlidableWidget(data: data, seleted: seleted)
+                child: SlidableWidget(data: data, seleted: seleted, handleAddMsg: handleAddMsg)
               ),
             ],
           ),
