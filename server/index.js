@@ -58,6 +58,7 @@ app.get("/auth/spotify/details", async (req, res) => {
         console.log(spotifyUser);
     } catch (error) {
         console.log("ERROR MAA");
+        console.log("ERROR MAA");
         console.log(error);
     }
 });
