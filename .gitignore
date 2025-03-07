@@ -11,7 +11,6 @@
 .svn/
 .swiftpm/
 migrate_working_dir/
-/server/index.js
 
 # IntelliJ related
 *.iml
@@ -37,6 +36,9 @@ migrate_working_dir/
 #firebase related
 /android/app/google-services.json
 /lib/firebase_options.dart
+
+#Server File
+/server/index.js
 
 # Symbolication related
 app.*.symbols
