@@ -38,7 +38,7 @@ migrate_working_dir/
 /lib/firebase_options.dart
 
 #Server File
-/server/index.js
+server/index.js
 
 # Symbolication related
 app.*.symbols
