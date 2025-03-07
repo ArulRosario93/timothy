@@ -29,7 +29,7 @@ class UserChatContainer extends StatelessWidget {
                 child: Text(
                   data["msg"],
                   style: GoogleFonts.poppins(
-                    fontSize: 12,
+                    fontSize: 14,
                     color: theme["textColor"],
                   ),
                 ),
@@ -40,7 +40,7 @@ class UserChatContainer extends StatelessWidget {
                 child: Text(
                   "19:27",
                   style: GoogleFonts.poppins(
-                    fontSize: 10,
+                    fontSize: 12,
                     color: Colors.grey,
                   ),
                 ),

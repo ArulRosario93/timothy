@@ -9,16 +9,14 @@ class UserProfile extends StatelessWidget {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black),
+          icon: Icon(Icons.arrow_back, color: Colors.white  ),
           onPressed: () {
             Navigator.pop(context);
           },
         ),
-        
       ),
       body: Column(
         children: [

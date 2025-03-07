@@ -7,20 +7,9 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
   
-    final PageController pageController = PageController();
-
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 25),
-      child: PageView(
-        controller: pageController,
-        scrollDirection: Axis.vertical,
-        pageSnapping: true,
-        children: [
-          Individual(),
-          Individual(),
-          Individual(),
-        ]
-      ),
+      child: Individual(),
     );
   }
 }

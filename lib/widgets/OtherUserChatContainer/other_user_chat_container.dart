@@ -37,15 +37,14 @@ class OtherUserChatContainer extends StatelessWidget {
           ),
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           child: Stack(
-            alignment: Alignment.centerRight,
             children: [
               Padding(
                 padding: const EdgeInsets.only(bottom: 16), // Space for timestamp
                 child: Text(
                   data["msg"],
-                  textAlign: TextAlign.center,
+                  textAlign: TextAlign.left,
                   style: GoogleFonts.poppins(
-                    fontSize: 12,
+                    fontSize: 14,
                     color: theme["textColor"],
                   ),
                 ),
@@ -56,7 +55,7 @@ class OtherUserChatContainer extends StatelessWidget {
                 child: Text(
                   "19:27",
                   style: GoogleFonts.poppins(
-                    fontSize: 10,
+                    fontSize: 12,
                     color: Colors.grey,
                   ),
                 ),

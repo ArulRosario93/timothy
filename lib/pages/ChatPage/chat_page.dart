@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:timothy/Services/server_methods.dart';
+import 'package:timothy/widgets/BottomSheetForSpotify/bottom_sheet_for_spotify.dart';
 import 'package:timothy/widgets/OtherUserChatContainer/other_user_chat_container.dart';
 import 'package:timothy/widgets/ShowModalBottomSheet/show_modal_bottom_sheet.dart';
 import 'package:timothy/widgets/UserChatContainer/user_chat_container.dart';
@@ -192,13 +194,38 @@ class _ChatPageState extends State<ChatPage> {
         scrollToBottom(false);
       }
     }
+  
+  void handleOpenHelperTexts({required String helperText}) async { {
+    // Handle click event
 
-    void handleOpenHelperTexts() {
-      // Handle click event
-      bottomSheetForMessage(context: context, data: bibleVerse, handleAddMsg: handleAddMsg); 
-    } 
+    if(helperText == "verses") {
+      // await ServerMethods().getRandomVersesFromBibleApi()!.then((value) {
+      //   if(value != null){
+      //     print(value["reference"]);
+      //     print(value["verses"]);
+      //   }
+      // });  
+      await ServerMethods().getRandomVersesFromApiEsv(book: "mathew", chapter: "5", verses: "3-12")!.then((value) {
+        if(value != null){
+          print(value);
+          print("BELOWWW");
+          print(value["passages"]);
+          print("BELOWW 6");
+          print(value["passages"][0]);
+        }
+      });
+    };
+  
+    bottomSheetForMessage(context: context, data: bibleVerse, handleAddMsg: handleAddMsg); 
+  }}
 
-    @override
+  void handleSpotifyView(){
+
+    bottomSheetForSpotify(context: context, image: "https://static.qobuz.com/images/covers/32/01/0190295710132_600.jpg", songName: "Perfect", atristName: "Ed Sheeran");
+
+  }
+
+  @override
   void initState() {
     // TODO: implement initState
     super.initState();
@@ -208,7 +235,7 @@ class _ChatPageState extends State<ChatPage> {
     );
   }
 
-    @override
+  @override
   void dispose() {
     // TODO: implement dispose
     super.dispose();
@@ -216,14 +243,12 @@ class _ChatPageState extends State<ChatPage> {
     scrollController.dispose();
     _focusNode.dispose();
     // Dispose of the focus node
-
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 31, 31, 31),
-        
       appBar: AppBar(
         foregroundColor: Colors.white,
         leadingWidth: 50,
@@ -232,27 +257,31 @@ class _ChatPageState extends State<ChatPage> {
         backgroundColor: const Color.fromARGB(255, 31, 31, 31),
         elevation: 0.0,
         centerTitle: false,
-        toolbarHeight: 60,
+        toolbarHeight: 100,
+        actionsIconTheme: IconThemeData(color: Colors.white),
         actions: [
-          Container(
-            width: 140,
-            height: 70,
-            margin: EdgeInsets.only(bottom: 10, right: 10),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              image: DecorationImage(image: NetworkImage("https://image.shutterstock.com/image-vector/perfect-3d-style-editable-text-260nw-2332976895.jpg"), fit: BoxFit.cover,),
-            ),
+          GestureDetector(
+            onTap: handleSpotifyView,
             child: Container(
-              color: Colors.black26,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("Perfect", style: GoogleFonts.poppins(fontSize: 12, color: Colors.white, fontWeight: FontWeight.bold),),
-                  Text("Ed Sheeran", style: GoogleFonts.poppins(fontSize: 8, color: Colors.white, fontWeight: FontWeight.w600),),
-                  const SizedBox(height: 5,),
-                  Image.network("https://storage.googleapis.com/pr-newsroom-wp/1/2023/05/Spotify_Primary_Logo_RGB_White.png", width: 10, height: 10, fit: BoxFit.cover,)
-                ],
+              width: 140,
+              height: 70,
+              margin: EdgeInsets.only(bottom: 10, right: 10),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                image: DecorationImage(image: NetworkImage("https://image.shutterstock.com/image-vector/perfect-3d-style-editable-text-260nw-2332976895.jpg"), fit: BoxFit.cover,),
+              ),
+              child: Container(
+                color: Colors.black26,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("Perfect", style: GoogleFonts.poppins(fontSize: 12, color: Colors.white, fontWeight: FontWeight.bold),),
+                    Text("Ed Sheeran", style: GoogleFonts.poppins(fontSize: 8, color: Colors.white, fontWeight: FontWeight.w600),),
+                    const SizedBox(height: 5,),
+                    // Image.network("https://www.figma.com/community/resource/0c2e9ce7-9ccc-4a64-bc58-591beae094f6/thumbnail", width: 10, height: 10, fit: BoxFit.cover,)
+                  ],
+                ),
               ),
             ),
           ),
@@ -317,7 +346,7 @@ class _ChatPageState extends State<ChatPage> {
             child: ListView.builder(
               itemBuilder: (context, index) {
                 return GestureDetector(
-                  onTap: handleOpenHelperTexts,
+                  onTap: () => handleOpenHelperTexts(helperText: helperMsgList[index]['name']),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
                     child: Text(helperMsgList[index]['name'], style: GoogleFonts.poppins(fontSize: 14, color: Colors.white60),)
