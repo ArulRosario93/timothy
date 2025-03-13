@@ -19,6 +19,9 @@ class _ChatPageState extends State<ChatPage> {
   ScrollController scrollController = ScrollController();
   final FocusNode _focusNode = FocusNode();
 
+  // For Bible Study Session
+  bool bibleStudySession = false;
+
     List helperMsgList = [
       {
         "name": "verses",
@@ -29,8 +32,8 @@ class _ChatPageState extends State<ChatPage> {
         "value": "rizz"
       },
       {
-        "name": "starting line",
-        "value": "startingline"
+        "name": "bible study",
+        "value": "biblestudy"
       },
       {
         "name": "silly gif",
@@ -124,6 +127,40 @@ class _ChatPageState extends State<ChatPage> {
       ]
     };
 
+    Map biblestudy = {
+      "title": "Bible Study",
+      "data": [
+        {
+          "verse": "The Parable of the Sower",
+          "reference": "- Matthew 13:3-9"
+        },
+        {
+          "verse": "The Parable of the Weeds",
+          "reference": "- Matthew 13:24-30"
+        },
+        {
+          "verse": "The Parable of the Mustard Seed",
+          "reference": "- Matthew 13:31-32"
+        },
+        {
+          "verse": "The Parable of the Yeast",
+          "reference": "- Matthew 13:33"
+        },
+        {
+          "verse": "The Parable of the Hidden Treasure",
+          "reference": "- Matthew 13:44"
+        },
+        {
+          "verse": "The Parable of the Pearl of Great Value",
+          "reference": "- Matthew 13:45-46"
+        },
+        {
+          "verse": "The Parable of the Net",
+          "reference": "- Matthew 13:47-50"
+        }
+      ]
+    };
+
     Map chatTheme = {
       "normal": {
         "user": {
@@ -194,41 +231,57 @@ class _ChatPageState extends State<ChatPage> {
         scrollToBottom(false);
       }
     }
-  
+
   void handleOpenHelperTexts({required String helperText}) async { {
     // Handle click event
 
-    if(helperText == "verses") {
+    // switch
+
+    // if(helperText == "verses") {
       // await ServerMethods().getRandomVersesFromBibleApi()!.then((value) {
       //   if(value != null){
       //     print(value["reference"]);
       //     print(value["verses"]);
       //   }
       // });  
-      await ServerMethods().getRandomVersesFromApiEsv(book: "mathew", chapter: "5", verses: "3-12")!.then((value) {
-        if(value != null){
-          print(value);
-          print("BELOWWW");
-          print(value["passages"]);
-          print("BELOWW 6");
-          print(value["passages"][0]);
-        }
-      });
-    };
+      // await ServerMethods().getRandomVersesFromApiEsv(book: "mathew", chapter: "5", verses: "3-12")!.then((value) {
+      //   if(value != null){
+      //     print(value);
+      //     print("BELOWWW");
+      //     print(value["passages"]);
+      //     print("BELOWW 6");
+      //     print(value["passages"][0]);
+      //   }
+      // });
+    // };
+
+    if (helperText == "bible study") {
+      
+      bottomSheetForMessage(context: context, data: biblestudy, type: biblestudy["title"], handleAddMsg: handleAddMsg); 
+      return;
+    }
   
-    bottomSheetForMessage(context: context, data: bibleVerse, handleAddMsg: handleAddMsg); 
+    bottomSheetForMessage(context: context, data: bibleVerse, type: bibleVerse["title"], handleAddMsg: handleAddMsg); 
   }}
 
   void handleSpotifyView(){
-
     bottomSheetForSpotify(context: context, image: "https://static.qobuz.com/images/covers/32/01/0190295710132_600.jpg", songName: "Perfect", atristName: "Ed Sheeran");
+  }
 
+  void handleChangeBibleStudySession(){
+
+    Future.delayed(const Duration(milliseconds: 1000), () {
+      setState(() {
+        bibleStudySession = !bibleStudySession;
+      });
+    });
   }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+
+    handleChangeBibleStudySession();
 
     _focusNode.addListener(
       () => scrollToBottom(true),
@@ -237,7 +290,6 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     msgController.dispose();
     scrollController.dispose();
@@ -248,7 +300,7 @@ class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 31, 31, 31),
+      backgroundColor: Colors.white,
       appBar: AppBar(
         foregroundColor: Colors.white,
         leadingWidth: 50,
@@ -287,74 +339,78 @@ class _ChatPageState extends State<ChatPage> {
           ),
         ],
       ),
-      body: Column(
+      body: Stack(
         children: [
-          Expanded(
-            child: Container(
-              color: Colors.white,
-              child: ListView.builder(
-                physics: BouncingScrollPhysics(),
-                scrollDirection: Axis.vertical,
-                controller: scrollController,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 8),
-                    child: msg[index]['name'] == "Arul Rosario" ?
-                      UserChatContainer(data: msg[index], theme: chatTheme["dark"]["user"],) : OtherUserChatContainer(data: msg[index], theme: chatTheme["dark"]["otherUser"],),
-                  );
-                }, 
-                itemCount: msg.length,
-              ),
-            ),
-          ),
-          TextField(
-            autofocus: false,
-            focusNode: _focusNode,
-            // onTap: () => scrollToBottom(true),
-            onSubmitted: (value) => handleSendMessage(),
-            // textInputAction: TextInputAction.newline,
-            keyboardType: TextInputType.multiline,
-            maxLines: 5,
-            minLines: 1,
-            controller: msgController,
-            style: GoogleFonts.poppins(fontSize: 14, color: Colors.white, fontWeight: FontWeight.w400),
-            cursorColor: Colors.white,
-            decoration: InputDecoration(
-              filled: true,
-              fillColor: const Color.fromARGB(255, 31, 31, 31),
-              hintText: 'Send Message',
-              hintStyle: GoogleFonts.poppins(fontSize: 14, color: Colors.white, fontWeight: FontWeight.w400),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
-                borderSide: BorderSide.none,
-              ),
-              focusedBorder: null,
-              enabledBorder: null,
-              errorBorder: null,
-              disabledBorder: null,
-              contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
-              suffixIcon: IconButton(
-                onPressed: handleSendMessage,
-                icon: const Icon(Icons.send_rounded, size: 18, color: Colors.white,),
-              ),
-            ),
-          ),
-          Container(
-            alignment: Alignment.center,
-            color: const  Color.fromARGB(255, 31, 31, 31),
-            height: 40,
-            child: ListView.builder(
-              itemBuilder: (context, index) {
-                return GestureDetector(
-                  onTap: () => handleOpenHelperTexts(helperText: helperMsgList[index]['name']),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
-                    child: Text(helperMsgList[index]['name'], style: GoogleFonts.poppins(fontSize: 14, color: Colors.white60),)
+          Column(
+            children: [
+              Expanded(
+                child: Container(
+                  color: Colors.white,
+                  child: ListView.builder(
+                    physics: BouncingScrollPhysics(),
+                    scrollDirection: Axis.vertical,
+                    controller: scrollController,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 8),
+                        child: msg[index]['name'] == "Arul Rosario" ?
+                          UserChatContainer(data: msg[index], theme: chatTheme["dark"]["user"],) : OtherUserChatContainer(data: msg[index], theme: chatTheme["dark"]["otherUser"],),
+                      );
+                    }, 
+                    itemCount: msg.length,
                   ),
-                );
-              }, 
-              itemCount: helperMsgList.length, scrollDirection: Axis.horizontal,
-            ),
+                ),
+              ),
+              TextField(
+                autofocus: false,
+                focusNode: _focusNode,
+                // onTap: () => scrollToBottom(true),
+                onSubmitted: (value) => handleSendMessage(),
+                // textInputAction: TextInputAction.newline,
+                keyboardType: TextInputType.multiline,
+                maxLines: 5,
+                minLines: 1,
+                controller: msgController,
+                style: GoogleFonts.poppins(fontSize: 14, color: Colors.white, fontWeight: FontWeight.w400),
+                cursorColor: Colors.white,
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: const Color.fromARGB(255, 31, 31, 31),
+                  hintText: 'Send Message',
+                  hintStyle: GoogleFonts.poppins(fontSize: 14, color: Colors.white, fontWeight: FontWeight.w400),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+                    borderSide: BorderSide.none,
+                  ),
+                  focusedBorder: null,
+                  enabledBorder: null,
+                  errorBorder: null,
+                  disabledBorder: null,
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+                  suffixIcon: IconButton(
+                    onPressed: handleSendMessage,
+                    icon: const Icon(Icons.send_rounded, size: 18, color: Colors.white,),
+                  ),
+                ),
+              ),
+              Container(
+                alignment: Alignment.center,
+                color: const  Color.fromARGB(255, 31, 31, 31),
+                height: 40,
+                child: ListView.builder(
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () => handleOpenHelperTexts(helperText: helperMsgList[index]['name']),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+                        child: Text(helperMsgList[index]['name'], style: GoogleFonts.poppins(fontSize: 14, color: Colors.white60),)
+                      ),
+                    );
+                  }, 
+                  itemCount: helperMsgList.length, scrollDirection: Axis.horizontal,
+                ),
+              ),
+            ],
           ),
         ],
       )
