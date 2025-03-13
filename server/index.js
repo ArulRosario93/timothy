@@ -7,8 +7,7 @@ admin.initializeApp();
 
 const app = express();
 
-// declaring the port
-const PORT = 3000;
+require('dotenv').config();
 
 app.get("/", (req, res) => {
     res.send("This is Home Page");
@@ -17,12 +16,11 @@ app.get("/", (req, res) => {
 app.get("/auth/spotify/details", async (req, res) => {
 
     const code = req.query.code;
+    const URL = process.eventNames.URL;
 
-    const URL = "https://accounts.spotify.com/api/token";
-
-    const clientID = "21ccb265edf64f7b9a272cdf00292167";
-    const clientSecret = "2e3f75a122b54b14a0468f275ed00ad1";
-    const redirectURL = "http://localhost:3000/auth/spotify/details";
+    const clientID = process.env.CLIENTID;
+    const clientSecret = process.env.CLIENTSECRET;
+    const redirectURL = process.env.REDIRECTURL;
 
     try {
 
@@ -48,7 +46,7 @@ app.get("/auth/spotify/details", async (req, res) => {
 
         // With Access Token get user data
 
-        const userResponse = await axios.get("https://api.spotify.com/v1/me", {
+        const userResponse = await axios.get(process.env.SPOTIFYME, {
             headers: { Authorization: `Bearer ${access_token}` },
         });
 
@@ -69,7 +67,7 @@ app.get('/auth/spotify/currentsong', async (req, res) => {
 
     try {
         
-        const response = axios.get("https://api.spotify.com/v1/me/player/currently-playing", {
+        const response = axios.get(process.env.CURRENTSONGAPI, {
             headers: {
                 "Authorization": `Bearer ${access_token}`
             }
@@ -148,6 +146,6 @@ app.get("/auth/spotify/refreshtoken", async (req, res) => {
 });
 
 
-app.listen(process.env.PORT || PORT,  () => {
-    console.log("Successfully running on port ", PORT);
+app.listen(process.env.PORT,  () => {
+    console.log("Successfully running on port ", process.env.PORT);
 });

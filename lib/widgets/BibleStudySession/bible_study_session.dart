@@ -177,15 +177,15 @@ class _BibleStudySessionState extends State<BibleStudySession> {
                 // Container(color: Colors.amberAccent,)
                 Column(
                   children: [
-                            
-                            const SizedBox(height: 12),
-                          
+
+                  const SizedBox(height: 12),
+
                   Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                            
+
                     SizedBox(width: makeAvailable? 50: 25),
-                            
+
                     Text("A", style: GoogleFonts.poppins(fontSize: 18, color: currentSlide == 1? Colors.amberAccent: Colors.white, fontWeight: FontWeight.normal),),
                     const SizedBox(width: 12),
                     Text("S", style: GoogleFonts.poppins(fontSize: 18, color: currentSlide == 2? Colors.amberAccent:  Colors.white, fontWeight: FontWeight.normal),),
@@ -197,9 +197,9 @@ class _BibleStudySessionState extends State<BibleStudySession> {
                     Text("C", style: GoogleFonts.poppins(fontSize: 18, color: currentSlide == 5? Colors.amberAccent: Colors.white, fontWeight: FontWeight.normal),),
                     const SizedBox(width: 12),
                     Text("T", style: GoogleFonts.poppins(fontSize: 18, color: currentSlide == 6? Colors.amberAccent: Colors.white, fontWeight: FontWeight.normal),),
-                            
+
                     const SizedBox(width: 25),
-                            
+
                     GestureDetector(
                       onTap: handleChangeSlide,
                       child: makeAvailable? Container(
@@ -214,11 +214,11 @@ class _BibleStudySessionState extends State<BibleStudySession> {
                     ),
                   ],
                 ),
-                                  
+
                 const SizedBox(height: 12),
-                                  
+
                 Text(headersforBibleStudy[currentSlide-1], style: GoogleFonts.poppins(fontSize: 18, decoration: TextDecoration.underline, color: Colors.white, fontWeight: FontWeight.w600),),
-                  
+
                 Expanded(
                   child: ListView.builder(
                     padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -228,7 +228,7 @@ class _BibleStudySessionState extends State<BibleStudySession> {
                     },
                   ),
                 ),
-                
+
                 TextField(
                   controller: message,
                   decoration: InputDecoration(
