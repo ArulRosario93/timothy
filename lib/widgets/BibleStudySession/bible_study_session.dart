@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 import "package:google_fonts/google_fonts.dart";
 
 class BibleStudySession extends StatefulWidget {
@@ -12,6 +13,8 @@ class _BibleStudySessionState extends State<BibleStudySession> {
 
   bool started = false;
   int currentSlide = 0;
+
+  late IO.Socket socket;
 
   // For the text input field
   TextEditingController message = TextEditingController();
@@ -54,6 +57,9 @@ class _BibleStudySessionState extends State<BibleStudySession> {
       });
     });
   }
+  // var sockett = WebSocketChannel.connect(
+  //   Uri.parse('ws://localhost:8080'), // Replace with your WebSocket URL
+  // );
 
   void handleChangeSlide(){
 
@@ -61,6 +67,7 @@ class _BibleStudySessionState extends State<BibleStudySession> {
       currentSlide++;
       makeAvailable = false;
     });
+
 
     Future.delayed(Duration(seconds: 10), () {
       setState(() {
@@ -106,11 +113,59 @@ class _BibleStudySessionState extends State<BibleStudySession> {
     });
   }
 
+
+  void handleSocket() async {
+
+    const url = 'http://192.168.1.119:3000'; // Replace with your WebSocket server URL
+
+    socket = IO.io(url,
+    IO.OptionBuilder()
+        .setTransports(['websocket']) // for Flutter or Dart VM
+        .disableAutoConnect()  // disable auto-connection
+        .build()
+    );
+
+    socket.connect();
+
+    socket.onConnect((_) {
+      print("Connected to WebSocket server");
+      socket.emit('joinRoom', 123456);
+    });
+
+    socket.onConnectError((data) {
+      print("Connection Error: $data");
+    });
+
+    socket.on('newMessage', (data) => {
+      print("New message FOUND: $data"),
+    });
+  }
+
+  void sendMessage(){
+
+    socket.emit('message', {
+        "roomID": 123456,
+        "message": "Hola mundo",
+      });
+
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
+    print("STARTING");
+    handleSocket();
+
+    sendMessage();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    // socket.dispose();
   }
 
   @override
@@ -134,7 +189,11 @@ class _BibleStudySessionState extends State<BibleStudySession> {
                           const SizedBox(height: 20),
                           Text("Bible Study", style: GoogleFonts.poppins(fontSize: 12, color: const Color.fromARGB(236, 255, 255, 255), fontWeight: FontWeight.w600),),
                           const SizedBox(height: 8),
-                          Text("The Parable of the Sower", style: GoogleFonts.poppins(fontSize: 18, color: Colors.white, fontStyle: FontStyle.italic, fontWeight: FontWeight.w600),),
+                          Hero(
+                            tag: "title",
+                            child: Text("The Parable of the Sower", style: GoogleFonts.poppins(fontSize: 18, color: Colors.white, fontStyle: FontStyle.italic, fontWeight: FontWeight.w600),
+                            )
+                          ),
                           const SizedBox(height: 6),
                           Text("Matthew 13:3-9", style: GoogleFonts.poppins(fontSize: 16, color: Colors.white, fontWeight: FontWeight.w400),),  
                           Expanded(
@@ -209,7 +268,7 @@ class _BibleStudySessionState extends State<BibleStudySession> {
                             border: makeAvailable? Border.all(color: Colors.white): Border.all(color: Colors.transparent),
                             borderRadius: BorderRadius.circular(25),
                           ),
-                          child: makeAvailable? loading? CircularProgressIndicator(color: Colors.white, strokeWidth: 2.0,):  Icon(Icons.arrow_forward, color: Colors.white, size: 20,): const SizedBox(),
+                          child: makeAvailable? loading? CircularProgressIndicator(color: Colors.white, strokeWidth: 2.0,):  Icon( currentSlide == 6? Icons.done :Icons.arrow_forward, color: Colors.white, size: 20,): const SizedBox(),
                         ): const SizedBox(),
                     ),
                   ],

@@ -2,10 +2,19 @@ const express = require("express");
 const functions = require("firebase-functions");
 const axios = require("axios");
 const admin = require("firebase-admin");
+const http = require("http");
+
+
+// const ws = require("ws")
+// const WSS = new ws.Server({ port: 8080 });
 
 admin.initializeApp();
 
 const app = express();
+const server = http.createServer(app);
+
+const socketio = require("socket.io")(server);
+// const io = new Server(server);
 
 require('dotenv').config();
 
@@ -67,7 +76,7 @@ app.get('/auth/spotify/currentsong', async (req, res) => {
 
     try {
         
-        const response = axios.get(process.env.CURRENTSONGAPI, {
+        const response = await axios.get(process.env.CURRENTSONGAPI, {
             headers: {
                 "Authorization": `Bearer ${access_token}`
             }
@@ -145,7 +154,53 @@ app.get("/auth/spotify/refreshtoken", async (req, res) => {
     }
 });
 
+// io.on("connection", (socket) => {
+//     console.log("Logging in");
+//     console.log("Client connected:", socket.id);
+  
+    // socket.on("message", (message) => {
+    //   console.log("Received message:", message);
+    //   io.emit("message", `Server: ${message}`); // Broadcast to all clients
+    // });
+  
+    // socket.on("disconnect", () => {
+    //   console.log("Client disconnected:", socket.id);
+    // });
+// });
 
-app.listen(process.env.PORT,  () => {
+socketio.on('connection', (userSocket) => {
+    
+    console.log("CONNECTED I GUESS");
+
+    userSocket.on("joinRoom", (data) => {
+        userSocket.join(data);
+
+        console.log("User Joined Room ", data);
+    });
+
+    userSocket.on('message', (data) => {
+
+        const { roomID, message } = data;
+
+        socketio.to(roomID).emit('newMessage', message);
+        console.log("MEssage Emitted from server to socket");     
+    })
+});
+
+// WSS.on('connection', ws => {
+//     console.log("CONNECTED");
+
+//     ws.send("HOW YOU DOINNG", )
+
+//     ws.on("message", msg => {
+
+//         console.log("Server recieved msg ", msg);
+
+//         ws.send("Ithan vangiko");
+
+//     })
+// });
+
+server.listen(process.env.PORT, () => {
     console.log("Successfully running on port ", process.env.PORT);
 });

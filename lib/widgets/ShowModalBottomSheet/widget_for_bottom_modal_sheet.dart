@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:timothy/widgets/Slidable/slidable.dart';
 
-class WidgetForVerses extends StatelessWidget {
+class WidgetForBottomModalSheet extends StatelessWidget {
 
   final Map data;
   final bool seleted;
+  final String type;
   final Function(List msgs) handleAddMsg;
-  const WidgetForVerses({super.key, required this.data, required this.seleted, required this.handleAddMsg});
+
+  const WidgetForBottomModalSheet({super.key, required this.data, required this.seleted, required this.type, required this.handleAddMsg});
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +46,7 @@ class WidgetForVerses extends StatelessWidget {
               ),
               SizedBox(height: 10), // Add spacing for better UI
               Expanded(
-                child: SlidableWidget(data: data, seleted: seleted, handleAddMsg: handleAddMsg)
+                child: SlidableWidget(data: data, seleted: seleted, handleAddMsg: handleAddMsg, type: type,)
               ),
             ],
           ),

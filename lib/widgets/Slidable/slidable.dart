@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:timothy/widgets/ShowModalBottomSheet/slidable_widget.dart';
+import 'package:timothy/widgets/ShowModalBottomSheet/slidable_component.dart';
+import 'package:timothy/widgets/ShowModalBottomSheet/slidable_component_for_bible_study.dart';
 
 class SlidableWidget extends StatefulWidget {
   final Map data;
   final bool seleted; // Track whether the item is selected
+  final String type;
   final Function(List msgs) handleAddMsg; // Callback to handle message submission
-  const SlidableWidget({super.key, required this.data, required this.seleted, required this.handleAddMsg});
+  const SlidableWidget({super.key, required this.data, required this.seleted, required this.handleAddMsg, required this.type});
 
   @override
   State<SlidableWidget> createState() => _SlidableWidgetState();
@@ -41,7 +43,7 @@ class _SlidableWidgetState extends State<SlidableWidget> {
       itemCount: widget.data["data"].length,
       physics: BouncingScrollPhysics(),
       itemBuilder: (context, index) {
-        return SlidableComponent(
+        return widget.type == "Bible Study"? SlidableComponentForBibleStudy(data: widget.data, index: index, handleClick: handleClick, isSelected: selectedIndex == index) : SlidableComponent(
           data: widget.data,
           index: index,
           handleClick: handleClick,

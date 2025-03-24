@@ -1,6 +1,5 @@
 import "package:flutter/material.dart";
-import "package:timothy/widgets/ShowModalBottomSheet/widget_for_biblestudy.dart";
-import "package:timothy/widgets/ShowModalBottomSheet/wiget_for_verses.dart";
+import "package:timothy/widgets/ShowModalBottomSheet/widget_for_bottom_modal_sheet.dart";
 
 Future<void> bottomSheetForMessage({required BuildContext context, required String type, required Map data, required Function(List msgs) handleAddMsg}){
 
@@ -20,9 +19,7 @@ Future<void> bottomSheetForMessage({required BuildContext context, required Stri
       ),
     ),
     builder: (context) {
-      return type == "verses"
-        ? WidgetForVerses(data: data, seleted: seleted, handleAddMsg: handleAddMsg)
-        : WidgetForBiblestudy(data: data, seleted: seleted, handleAddMsg: handleAddMsg);
+      return WidgetForBottomModalSheet(data: data, seleted: seleted, handleAddMsg: handleAddMsg, type: type,);
     }
   );
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:timothy/pages/Timothy/timothy.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:timothy/widgets/BibleStudySession/bible_study_session.dart';
@@ -14,7 +15,6 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
   // Run the app
   runApp(const Timothy());
 }
@@ -28,7 +28,7 @@ class Timothy extends StatelessWidget {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: BibleStudySession(),
+      home: TimothyApp(),
     );
   }
 }

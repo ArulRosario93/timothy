@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:timothy/Services/server_methods.dart';
 import 'package:timothy/widgets/BottomSheetForSpotify/bottom_sheet_for_spotify.dart';
 import 'package:timothy/widgets/OtherUserChatContainer/other_user_chat_container.dart';
 import 'package:timothy/widgets/ShowModalBottomSheet/show_modal_bottom_sheet.dart';
